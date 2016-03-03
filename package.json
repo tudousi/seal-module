@@ -1,0 +1,26 @@
+{
+  "name": "test",
+  "description": "test",
+  "author": "td",
+  "version": "0.0.1",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-umd": "^0.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "homepage": "",
+  "bugs": {
+    "url": ""
+  },
+  "scripts": {
+    "test": "node tests"
+  },
+  "keywords": [
+    "umd"
+  ],
+  "license": "MIT"
+}
