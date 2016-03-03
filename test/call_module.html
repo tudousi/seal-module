@@ -29,15 +29,22 @@
             return Person.__super__.constructor.apply(this, arguments);
         }
         extend(Person, SealModule);
-        debugger;
+
+
+        function Jack() {
+
+        }
+        Jack.pluginName = "edit";
+
         Person.extend({
             job: "web dev",
             extended: function() {
                 console.log('extended!');
             }
-        })
-        var p = new Person();
+        });
         debugger;
+        Person.connect(Jack);
+        var p = new Person();
     </script>
 </body>
 </html>
