@@ -11,8 +11,8 @@ SealModule.prototype.opts = {}
 function SealModule(opts){
     var instances;
     this.opts = $.extend({}, this.opts, opts);
-    if(!this.constructor._connectedCLasses) {
-        this.constructor._connectedCLasses = [];
+    if(!this.constructor._connectedClasses) {
+        this.constructor._connectedClasses = [];
     }
     instances = (function(){
         var i;
