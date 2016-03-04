@@ -24,7 +24,6 @@
             child.__super__ = parent.prototype;
             return child;
         }
-
         function Person() {
             return Person.__super__.constructor.apply(this, arguments);
         }
@@ -32,8 +31,10 @@
 
 
         function Jack() {
-
+            return Jack.__super__.constructor.apply(this, arguments);
         }
+        extend(Jack, SealModule);
+
         Jack.pluginName = "edit";
 
         Person.extend({

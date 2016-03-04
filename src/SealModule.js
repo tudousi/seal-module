@@ -22,6 +22,7 @@ function SealModule(opts){
         }
         return results;
     }).call(this);
+    debugger;
 }
 // 给类扩展静态属性和方法
 SealModule.extend = function(obj) {
