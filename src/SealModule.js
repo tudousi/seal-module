@@ -22,7 +22,16 @@ function SealModule(opts){
         }
         return results;
     }).call(this);
-    debugger;
+    if(this._connected) {
+        this.opts = $.extend({}, this.opts, this._module.opts);
+    } else {
+        this._init();
+        for(i = 0, len = instances.length; i < len; i++) {
+            if(typeof instances[i]._init === 'function') {
+                instances[i]._init();
+            }
+        }
+    }
 }
 // 给类扩展静态属性和方法
 SealModule.extend = function(obj) {

@@ -33,6 +33,9 @@
         function Jack() {
             return Jack.__super__.constructor.apply(this, arguments);
         }
+        Jack.prototype._init = function() {
+            console.log('jack init');
+        };
         extend(Jack, SealModule);
 
         Jack.pluginName = "edit";
