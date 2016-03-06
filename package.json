@@ -1,26 +1,27 @@
 {
-  "name": "test",
-  "description": "test",
-  "author": "td",
+  "name": "seal-module",
+  "description": "为其他UI类提供基础功能的基类",
+  "author": "tudousi",
   "version": "0.0.1",
   "dependencies": {},
   "devDependencies": {
     "gulp": "^3.9.1",
-    "gulp-umd": "^0.2.0"
+    "gulp-umd": "^0.2.0",
+    "jasmine": "^2.4.1"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/tudousi/seal-module"
   },
-  "homepage": "",
+  "homepage": "https://github.com/tudousi/seal-module",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/tudousi/seal-module/issues"
   },
   "scripts": {
     "test": "node tests"
   },
   "keywords": [
-    "umd"
+    "seal-module"
   ],
   "license": "MIT"
 }

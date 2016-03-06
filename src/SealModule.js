@@ -1,4 +1,9 @@
+var slice = Array.prototype.slice;
 SealModule.prototype.opts = {}
+/**
+* 基类构造函数
+* 1：扩展参数。2：初始化所依赖类的实例。3：调用_init方法
+*/
 function SealModule(opts){
     var instances;
     this.opts = $.extend({}, this.opts, opts);
@@ -46,6 +51,7 @@ SealModule.extend = function(obj) {
     }
     return obj.extended ? obj.extended.call(this) : null;
 };
+// 扩展对象的原型方法
 SealModule.include = function(obj) {
     var key;
     if(obj == null || (typeof obj !== 'object')) {
@@ -58,6 +64,7 @@ SealModule.include = function(obj) {
     }
     return obj.included ? obj.included.call(this) : null;
 };
+// 给当前类添加它所依赖的其他类或插件
 SealModule.connect = function(cls) {
     if(typeof cls !== 'function') {
         return;
@@ -76,28 +83,97 @@ SealModule.connect = function(cls) {
 SealModule.prototype._init = function() {
 
 };
+/**
+* 订阅消息
+*/
 SealModule.prototype.on = function() {
-
+    var jo = null;
+    var args = (arguments.length >= 1) ? slice.call(arguments, 0) : [];
+    jo = $(this);
+    jo.on.apply(jo, args);
+    return this;
 };
+/**
+* 只订阅一次消息
+*/
 SealModule.prototype.one = function() {
-
+    var jo = null;
+    var args = (arguments.length >= 1) ? slice.call(arguments, 0) : [];
+    jo = $(this);
+    jo.one.apply(jo, args);
+    return this;
 };
+/**
+* 取消订阅消息
+*/
 SealModule.prototype.off = function() {
-
+    var jo = null;
+    var args = (arguments.length >= 1) ? slice.call(arguments, 0) : [];
+    jo = $(this);
+    jo.off.apply(jo, args);
+    return this;
 };
+/**
+* 发布消息
+*/
 SealModule.prototype.trigger = function() {
-
+    var jo = null;
+    var args = (arguments.length >= 1) ? slice.call(arguments, 0) : [];
+    jo = $(this);
+    jo.trigger.apply(jo, args);
+    return this;
 };
+/**
+* 发布消息
+*/
 SealModule.prototype.triggerHandler = function() {
-
+    var jo = null;
+    var args = (arguments.length >= 1) ? slice.call(arguments, 0) : [];
+    jo = $(this);
+    return jo.triggerHandler.apply(jo, args);
 };
 SealModule.prototype._t = function() {
-
+    var args = (arguments.length >= 1) ? slice.call(arguments, 0) : [];
+    return this.constructor._t.apply(this, args);
 };
+/**
+* args1 => "key" Message
+* args2 => "replace value" tudousi
+*/
 SealModule._t = function() {
+    var key;
+    var args;
+    var langStr;             // 目标语言
+    key = arguments[0];
+    args = (arguments.length > 1) ? slice.call(arguments, 1) : [];
 
+    if(!SealModule.locale || !SealModule.i18n[SealModule.locale]) {
+        return "";
+    }
+    langStr = parseDot(SealModule.i18n[SealModule.locale], key);
+    // 对占位符用参数进行替换
 };
-SealModule.i18n = function() {
+/**
+* 根据字符串找到对象的值  "foo.bar"
+* obj 一个对象
+* key 可以是一个直接的对象key，也可以是对象.访问的书写形式
+*/
+var parseDot = function(obj, key) {
+    if(obj.hasOwnProperty(key)) {
+        return obj[key];
+    }
+    if(typeof key === 'string') {
+        return parseDot(obj, key.split('.'));
+    } else if(key.length === 0) {
+        return obj;
+    } else {
+        if(obj.hasOwnProperty(key[0])) {
+            return parseDot(obj[key[0]], key.slice(1));
+        } else {
+            return obj[key.join('.')] = key.join('.');
+        }
+    }
+}
 
-};
+SealModule.i18n = {};
 SealModule.locale = "zh-CN";
