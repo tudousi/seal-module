@@ -14,6 +14,9 @@ var extend = function(child, parent) {
 function Knife() {
 
 }
+Knife.prototype._init = function() {
+    console.log('Knife init');
+};
 Knife.pluginName = "Knife";
 
 var extendMixin = {
@@ -45,11 +48,6 @@ describe('module base function', function() {
         name = date.name;
     });
 
-    // i18n
-    debugger;
-    //p._t("Message", "tudousi");
-    //p._t("info.name", "tudousi");
-    p._t("info.age", "tudousi");
     it("module extend", function() {
         expect(Pen.__super__).toBe(SealModule.prototype);
     });
@@ -77,4 +75,15 @@ describe('module base function', function() {
         p.trigger('sealmodule.on', {name: "tudousi"});
         expect(name).toBe('tudousi');
     });
+    // 你有 10 条消息，未读 5 条消息
+    it('object _t function single', function() {
+        expect(p._t('Hello')).toBe('你好');
+    })
+    it('object _t function params', function() {
+        var res = p._t("Message", 10, 5);
+        expect(res).toBe('你有 10 条消息，未读 5 条消息');
+    })
+    it('object _t function by foo.bar call', function() {
+        expect(p._t('info.name')).toBe('jiangzhu');
+    })
 });

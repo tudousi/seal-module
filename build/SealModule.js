@@ -103,7 +103,7 @@ SealModule.prototype.on = function() {
     return this;
 };
 /**
-* 订阅一次消息
+* 只订阅一次消息
 */
 SealModule.prototype.one = function() {
     var jo = null;
@@ -142,8 +142,9 @@ SealModule.prototype.triggerHandler = function() {
     return jo.triggerHandler.apply(jo, args);
 };
 SealModule.prototype._t = function() {
+    var ref = this.constructor;
     var args = (arguments.length >= 1) ? slice.call(arguments, 0) : [];
-    return this.constructor._t.apply(this, args);
+    return ref._t.apply(ref, args);
 };
 /**
 * args1 => "key" Message
@@ -156,11 +157,15 @@ SealModule._t = function() {
     key = arguments[0];
     args = (arguments.length > 1) ? slice.call(arguments, 1) : [];
 
-    if(!SealModule.locale || !SealModule.i18n[SealModule.locale]) {
+    if(!this.locale || !this.i18n[this.locale]) {
         return "";
     }
-    langStr = parseDot(SealModule.i18n[SealModule.locale], key);
-
+    langStr = parseDot(this.i18n[this.locale], key);
+    // 对占位符用参数进行替换
+    langStr = langStr.replace(/(%s)/g, function(r1, r, offset) {
+        return args.shift();
+    });
+    return langStr;
 };
 /**
 * 根据字符串找到对象的值  "foo.bar"
@@ -184,19 +189,7 @@ var parseDot = function(obj, key) {
     }
 }
 
-SealModule.i18n = {
-    'zh-CN': {
-        'Hello': "你好",
-        "Message": "你有 %s 条消息",
-        "info": {
-            "name": "jiangzhu"
-        }
-    },
-    'en-US': {
-        "Hello": "Hello",
-        "Message": "You have %s Message"
-    }
-}
+SealModule.i18n = {};
 SealModule.locale = "zh-CN";
 
 return SealModule;
