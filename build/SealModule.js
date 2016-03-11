@@ -8,6 +8,7 @@
   }
 }(this, function($) {
 var slice = Array.prototype.slice;
+var hasProp = {}.hasOwnProperty;
 SealModule.prototype.opts = {}
 /**
 * 基类构造函数
@@ -47,6 +48,19 @@ function SealModule(opts){
         }
     }
 }
+// child 继承 parent。属性继承和原型继承，还会增加函数__super-__指向父类原型
+SealModule.inherit = function(child, parent) {
+    for (var key in parent) {
+        if (hasProp.call(parent, key)) child[key] = parent[key];
+    }
+    function ctor() {
+        this.constructor = child;
+    }
+    ctor.prototype = parent.prototype;
+    child.prototype = new ctor();
+    child.__super__ = parent.prototype;
+    return child;
+};
 // 给类扩展静态属性和方法
 SealModule.extend = function(obj) {
     var key;
